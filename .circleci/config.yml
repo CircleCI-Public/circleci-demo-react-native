@@ -1,0 +1,68 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/project
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - run: yarn
+      - run: yarn run test
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - node_modules
+      - store_test_results:
+          path: ~/project/junit.xml
+
+  android:
+    working_directory: ~/project/android
+    docker:
+      - image: circleci/android:api-27-node8-alpha
+    steps:
+      - checkout:
+          path: ~/project
+      - attach_workspace:
+          at: ~/project
+      - run: bundle install
+      - run: bundle exec fastlane test
+      - store_test_results:
+          path: ~/project/android/reports
+
+  ios:
+    macos:
+      xcode: "9.0"
+    working_directory: /Users/distiller/project/ios
+    environment:
+      FL_OUTPUT_DIR: /Users/distiller/project/output
+    shell: /bin/bash --login -o pipefail
+    steps:
+      - checkout:
+          path: /Users/distiller/project
+      - run:
+          name: Set Ruby Version
+          command:  echo "ruby-2.4" > ~/.ruby-version
+      # Not using a workspace here as Node and Yarn versions
+      # differ between the macOS image and the Docker containers above.
+      - run: yarn
+      - run: bundle install
+      - run: bundle exec fastlane test
+      - run:
+          command: cp $FL_OUTPUT_DIR/scan/report.junit $FL_OUTPUT_DIR/scan/results.xml
+          when: always
+      - store_artifacts:
+          path: /Users/distiller/project/output
+      - store_test_results:
+          path: /Users/distiller/project/output/scan
+
+workflows:
+  version: 2
+  node-android-ios:
+    jobs:
+      - build
+      - android:
+          requires:
+            - build
+      - ios:
+          requires:
+            - build

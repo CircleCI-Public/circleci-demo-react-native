@@ -1,0 +1,25 @@
+{
+  "name": "circleci-demo-react-native",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "babel-preset-react-native-stage-0": "^1.0.1",
+    "jest-expo": "23.0.0",
+    "jest-junit": "3.3.0",
+    "react-test-renderer": "16.0.0"
+  },
+  "scripts": {
+    "start": "react-native start",
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "test": "node node_modules/jest/bin/jest.js"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "testResultsProcessor": "jest-junit"
+  },
+  "dependencies": {
+    "react": "16.0.0",
+    "react-native": "0.50.3"
+  }
+}
