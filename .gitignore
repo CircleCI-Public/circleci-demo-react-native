@@ -12,6 +12,8 @@
 .env.test.local
 .env.production.local
 
+ios/CircleCIDemoReactNative.xcodeproj/project.xcworkspace/xcuserdata/*
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
