@@ -25,14 +25,20 @@ jobs:
           paths:
             - node_modules
 
-      - run: yarn run test
+      - run:
+          name: jest tests
+          command: yarn run test
+          environment:
+            JEST_JUNIT_OUTPUT: junit.xml
+
+
       - persist_to_workspace:
           root: ~/project
           paths:
             - node_modules
 
       - store_test_results:
-          path: ~/project
+          path: junit.xml
 
       - store_artifacts:
           path: index.html
