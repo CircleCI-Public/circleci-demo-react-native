@@ -16,8 +16,12 @@ jobs:
       - store_test_results:
           path: ~/project
 
-      # - store_artifacts:
-      #     path: ~/project
+      - run: |
+          touch testfile.txt
+          echo 'testing' > testfile.txt
+
+      - store_artifacts:
+          path: testfile.txt
 
   android:
     working_directory: ~/project/android
