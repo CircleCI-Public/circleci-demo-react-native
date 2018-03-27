@@ -34,12 +34,8 @@ jobs:
       - store_test_results:
           path: ~/project
 
-      - run: |
-          touch testfile.txt
-          echo 'testing' > testfile.txt
-
       - store_artifacts:
-          path: testfile.txt
+          path: index.html
 
   android:
     working_directory: ~/project/android
