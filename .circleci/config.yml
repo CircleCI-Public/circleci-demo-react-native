@@ -88,20 +88,20 @@ jobs:
       # differ between the macOS image and the Docker containers above.
 
       - restore_cache:
-          key: ios-yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
+          key: ios-yarn-v1-{{ checksum "/Users/distiller/project/yarn.lock" }}-{{ arch }}
 
       - restore_cache:
-          key: ios-node-v1-{{ checksum "package.json" }}-{{ arch }}
+          key: ios-node-v1-{{ checksum "/Users/distiller/project/package.json" }}-{{ arch }}
 
       - run: yarn install
 
       - save_cache:
-          key: ios-yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
+          key: ios-yarn-v1-{{ checksum "/Users/distiller/project/yarn.lock" }}-{{ arch }}
           paths:
             - ~/.cache/yarn
 
       - save_cache:
-          key: ios-node-v1-{{ checksum "package.json" }}-{{ arch }}
+          key: ios-node-v1-{{ checksum "/Users/distiller/project/package.json" }}-{{ arch }}
           paths:
             - node_modules
 
