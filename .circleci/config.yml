@@ -28,10 +28,10 @@ jobs:
       - run:
           name: jest tests
           command: |
-            mkdir -p test-results
+            mkdir -p test-results/jest
             yarn run test
           environment:
-            JEST_JUNIT_OUTPUT: test-results/junit.xml
+            JEST_JUNIT_OUTPUT: test-results/jest/junit.xml
 
 
       - persist_to_workspace:
