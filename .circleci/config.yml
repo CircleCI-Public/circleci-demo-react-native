@@ -29,7 +29,7 @@ jobs:
           name: jest tests
           command: yarn run test
           environment:
-            JEST_JUNIT_OUTPUT: junit.xml
+            JEST_JUNIT_OUTPUT: /tmp/junit.xml
 
 
       - persist_to_workspace:
@@ -38,10 +38,10 @@ jobs:
             - node_modules
 
       - store_test_results:
-          path: junit.xml
+          path: /tmp
 
       - store_artifacts:
-          path: index.html
+          path: /tmp/junit.xml
 
   android:
     working_directory: ~/project/android
