@@ -6,7 +6,26 @@ jobs:
       - image: circleci/node:8
     steps:
       - checkout
-      - run: yarn
+
+
+      - restore_cache:
+          key: demo-yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
+
+      - restore_cache:
+          key: demo-node-v1-{{ checksum "package.json" }}-{{ arch }}
+
+      - run: yarn install
+
+      - save_cache:
+          key: demo-yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
+          paths:
+            - ~/.cache/yarn
+
+      - save_cache:
+          key: demo-node-v1-{{ checksum "package.json" }}-{{ arch }}
+          paths:
+            - node_modules
+
       - run: yarn run test
       - persist_to_workspace:
           root: ~/project
