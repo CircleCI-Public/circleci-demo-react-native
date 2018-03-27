@@ -16,8 +16,8 @@ jobs:
       - store_test_results:
           path: ~/project
 
-      - store_artifacts:
-          path: ~/project
+      # - store_artifacts:
+      #     path: ~/project
 
   android:
     working_directory: ~/project/android
