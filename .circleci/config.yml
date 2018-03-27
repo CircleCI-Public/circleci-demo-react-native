@@ -115,14 +115,16 @@ jobs:
           paths:
             - vendor/bundle
 
-      - run: bundle exec fastlane test
+      - run: |
+          mkdir -p /Users/distiller/project/output/scan/fastlane
+          bundle exec fastlane test
 
       - run:
           command: cp $FL_OUTPUT_DIR/scan/report.junit $FL_OUTPUT_DIR/scan/results.xml
           when: always
 
       - store_artifacts:
-          path: /Users/distiller/project/output
+          path: /Users/distiller/project/output/fastlane
 
       - store_test_results:
           path: /Users/distiller/project/output/scan
