@@ -30,6 +30,7 @@ jobs:
           command: yarn run test
           environment:
             JEST_JUNIT_OUTPUT: /tmp/junit.xml
+            JEST_JUNIT_SUITE_NAME: demo
 
 
       - persist_to_workspace:
