@@ -78,6 +78,7 @@ jobs:
     environment:
       FL_OUTPUT_DIR: /Users/distiller/project/output
     shell: /bin/bash --login -o pipefail
+    parallelism: 2
     steps:
       - checkout:
           path: /Users/distiller/project
@@ -120,11 +121,11 @@ jobs:
           bundle exec fastlane test
 
       - run:
-          command: cp $FL_OUTPUT_DIR/scan/report.junit $FL_OUTPUT_DIR/scan/results.xml
+          command: cp $FL_OUTPUT_DIR/scan/report.junit $FL_OUTPUT_DIR/scan/fastlane/results.xml
           when: always
 
       - store_artifacts:
-          path: /Users/distiller/project/output/fastlane
+          path: /Users/distiller/project/output/scan/fastlane
 
       - store_test_results:
           path: /Users/distiller/project/output/scan
