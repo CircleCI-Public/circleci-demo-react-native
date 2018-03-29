@@ -57,14 +57,14 @@ jobs:
       - restore_cache:
           key: android-bundle-v2-{{ checksum "android/Gemfile.lock" }}-{{ arch }}
 
-      - run: bundle install
+      - run: cd android && bundle install
 
       - save_cache:
           key: android-bundle-v2-{{ checksum "android/Gemfile.lock" }}-{{ arch }}
           paths:
             - android/vendor/bundle
 
-      - run: bundle exec fastlane test
+      - run: cd android && bundle exec fastlane test
 
       - store_test_results:
           path: ~/demo-react-native/android/reports
