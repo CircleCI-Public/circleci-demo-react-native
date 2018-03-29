@@ -1,2 +1,2 @@
 # Fetched from GitHub
-gem "fastlane-plugin-pretty_junit", git: "https://github.com/leandog/fastlane-plugin-pretty_junit"
+# gem "fastlane-plugin-pretty_junit", git: "https://github.com/leandog/fastlane-plugin-pretty_junit"

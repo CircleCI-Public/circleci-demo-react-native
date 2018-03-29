@@ -22,10 +22,10 @@ platform :android do
 
   desc "Runs all the tests"
   lane :test do
-    output_pattern = '/**/*.xml'
+    # output_pattern = '/**/*.xml'
 
-    gradle(task: "test", flags: "|| true")
-    pretty_junit(file_pattern: output_pattern)
+    gradle(task: "test") # , flags: "|| true"
+    # pretty_junit(file_pattern: output_pattern)
   end
 
   desc "Submit a new Beta Build to Crashlytics Beta"
