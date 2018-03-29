@@ -8,20 +8,20 @@ jobs:
       - checkout
 
       - restore_cache:
-          key: build-yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
+          key: build-yarn-v2-{{ checksum "yarn.lock" }}-{{ arch }}
 
       - restore_cache:
-          key: build-node-v1-{{ checksum "package.json" }}-{{ arch }}
+          key: build-node-v2-{{ checksum "package.json" }}-{{ arch }}
 
       - run: yarn install
 
       - save_cache:
-          key: build-yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
+          key: build-yarn-v2-{{ checksum "yarn.lock" }}-{{ arch }}
           paths:
             - ~/.cache/yarn
 
       - save_cache:
-          key: build-node-v1-{{ checksum "package.json" }}-{{ arch }}
+          key: build-node-v2-{{ checksum "package.json" }}-{{ arch }}
           paths:
             - node_modules
 
@@ -55,12 +55,12 @@ jobs:
           at: ~/demo-react-native
 
       - restore_cache:
-          key: android-bundle-v1-{{ checksum "android/Gemfile.lock" }}-{{ arch }}
+          key: android-bundle-v2-{{ checksum "android/Gemfile.lock" }}-{{ arch }}
 
       - run: bundle install
 
       - save_cache:
-          key: android-bundle-v1-{{ checksum "android/Gemfile.lock" }}-{{ arch }}
+          key: android-bundle-v2-{{ checksum "android/Gemfile.lock" }}-{{ arch }}
           paths:
             - android/vendor/bundle
 
@@ -87,30 +87,30 @@ jobs:
       # differ between the macOS image and the Docker containers above.
 
       - restore_cache:
-          key: ios-yarn-v1-{{ checksum "/Users/distiller/project/yarn.lock" }}-{{ arch }}
+          key: ios-yarn-v2-{{ checksum "/Users/distiller/project/yarn.lock" }}-{{ arch }}
 
       - restore_cache:
-          key: ios-node-v1-{{ checksum "/Users/distiller/project/package.json" }}-{{ arch }}
+          key: ios-node-v2-{{ checksum "/Users/distiller/project/package.json" }}-{{ arch }}
 
       - run: yarn install
 
       - save_cache:
-          key: ios-yarn-v1-{{ checksum "/Users/distiller/project/yarn.lock" }}-{{ arch }}
+          key: ios-yarn-v2-{{ checksum "/Users/distiller/project/yarn.lock" }}-{{ arch }}
           paths:
             - ~/.cache/yarn
 
       - save_cache:
-          key: ios-node-v1-{{ checksum "/Users/distiller/project/package.json" }}-{{ arch }}
+          key: ios-node-v2-{{ checksum "/Users/distiller/project/package.json" }}-{{ arch }}
           paths:
             - node_modules
 
       - restore_cache:
-          key: ios-bundle-v1-{{ checksum "Gemfile.lock" }}-{{ arch }}
+          key: ios-bundle-v2-{{ checksum "Gemfile.lock" }}-{{ arch }}
 
       - run: bundle install
 
       - save_cache:
-          key: ios-bundle-v1-{{ checksum "Gemfile.lock" }}-{{ arch }}
+          key: ios-bundle-v2-{{ checksum "Gemfile.lock" }}-{{ arch }}
           paths:
             - vendor/bundle
 
