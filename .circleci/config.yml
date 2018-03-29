@@ -114,7 +114,7 @@ jobs:
       - restore_cache:
           key: ios-bundle-v3-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
 
-      - run: bundle install
+      - run: cd ios && bundle install
 
       - save_cache:
           key: ios-bundle-v3-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
@@ -123,7 +123,7 @@ jobs:
 
       - run: |
           mkdir -p output/scan/fastlane
-          bundle exec fastlane test
+          cd ios && bundle exec fastlane test
 
       - run:
           command: cp $FL_OUTPUT_DIR/scan/report.junit $FL_OUTPUT_DIR/scan/fastlane/results.xml
