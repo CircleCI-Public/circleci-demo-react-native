@@ -1,74 +1,33 @@
 version: 2
 jobs:
-  node:
-    working_directory: ~/demo-react-native
+  build:
+    working_directory: ~/project
     docker:
       - image: circleci/node:8
     steps:
       - checkout
-
-      - restore_cache:
-          key: build-yarn-v2-{{ checksum "yarn.lock" }}-{{ arch }}
-
-      - restore_cache:
-          key: build-node-v2-{{ checksum "package.json" }}-{{ arch }}
-
-      - run: yarn install
-
-      - save_cache:
-          key: build-yarn-v2-{{ checksum "yarn.lock" }}-{{ arch }}
-          paths:
-            - ~/.cache/yarn
-
-      - save_cache:
-          key: build-node-v2-{{ checksum "package.json" }}-{{ arch }}
-          paths:
-            - node_modules
-
-      - run:
-          name: jest tests
-          command: |
-            mkdir -p test-results/jest
-            yarn run test
-          environment:
-            JEST_JUNIT_OUTPUT: test-results/jest/junit.xml
-
+      - run: yarn
+      - run: yarn run test
       - persist_to_workspace:
-          root: ~/demo-react-native
+          root: ~/project
           paths:
             - node_modules
-
       - store_test_results:
-          path: test-results
-
-      - store_artifacts:
-          path: test-results
+          path: ~/project/junit.xml
 
   android:
-    working_directory: ~/demo-react-native/android
+    working_directory: ~/project/android
     docker:
       - image: circleci/android:api-27-node8-alpha
     steps:
       - checkout:
-          path: ~/demo-react-native
-
+          path: ~/project
       - attach_workspace:
-          at: ~/demo-react-native
-
-      - restore_cache:
-          key: android-bundle-v2-{{ checksum "Gemfile.lock" }}-{{ arch }}
-
+          at: ~/project
       - run: bundle install
-
-      - save_cache:
-          key: android-bundle-v2-{{ checksum "Gemfile.lock" }}-{{ arch }}
-          paths:
-            - vendor/bundle
-
       - run: bundle exec fastlane test
-
       - store_test_results:
-          path: ~/demo-react-native/android/reports
+          path: ~/project/android/reports
 
   ios:
     macos:
@@ -77,7 +36,6 @@ jobs:
     environment:
       FL_OUTPUT_DIR: /Users/distiller/project/output
     shell: /bin/bash --login -o pipefail
-    # parallelism: 2
     steps:
       - checkout:
           path: /Users/distiller/project
@@ -86,46 +44,14 @@ jobs:
           command:  echo "ruby-2.4" > ~/.ruby-version
       # Not using a workspace here as Node and Yarn versions
       # differ between the macOS image and the Docker containers above.
-
-      - restore_cache:
-          key: ios-yarn-v2-{{ checksum "/Users/distiller/project/yarn.lock" }}-{{ arch }}
-
-      - restore_cache:
-          key: ios-node-v2-{{ checksum "/Users/distiller/project/package.json" }}-{{ arch }}
-
-      - run: yarn install
-
-      - save_cache:
-          key: ios-yarn-v2-{{ checksum "/Users/distiller/project/yarn.lock" }}-{{ arch }}
-          paths:
-            - ~/.cache/yarn
-
-      - save_cache:
-          key: ios-node-v2-{{ checksum "/Users/distiller/project/package.json" }}-{{ arch }}
-          paths:
-            - node_modules
-
-      - restore_cache:
-          key: ios-bundle-v2-{{ checksum "Gemfile.lock" }}-{{ arch }}
-
+      - run: yarn
       - run: bundle install
-
-      - save_cache:
-          key: ios-bundle-v2-{{ checksum "Gemfile.lock" }}-{{ arch }}
-          paths:
-            - vendor/bundle
-
-      - run: |
-          mkdir -p /Users/distiller/project/output/scan/fastlane
-          bundle exec fastlane test
-
+      - run: bundle exec fastlane test
       - run:
-          command: cp $FL_OUTPUT_DIR/scan/report.junit $FL_OUTPUT_DIR/scan/fastlane/results.xml
+          command: cp $FL_OUTPUT_DIR/scan/report.junit $FL_OUTPUT_DIR/scan/results.xml
           when: always
-
       - store_artifacts:
-          path: /Users/distiller/project/output/scan/fastlane
-
+          path: /Users/distiller/project/output
       - store_test_results:
           path: /Users/distiller/project/output/scan
 
@@ -133,10 +59,153 @@ workflows:
   version: 2
   node-android-ios:
     jobs:
-      - node
+      - build
       - android:
           requires:
-            - node
+            - build
       - ios:
           requires:
-            - node
+            - build
+
+# version: 2
+# jobs:
+#   node:
+#     working_directory: ~/demo-react-native
+#     docker:
+#       - image: circleci/node:8
+#     steps:
+#       - checkout
+
+#       - restore_cache:
+#           key: build-yarn-v3-{{ checksum "yarn.lock" }}-{{ arch }}
+
+#       - restore_cache:
+#           key: build-node-v3-{{ checksum "package.json" }}-{{ arch }}
+
+#       - run: yarn install
+
+#       - save_cache:
+#           key: build-yarn-v3-{{ checksum "yarn.lock" }}-{{ arch }}
+#           paths:
+#             - ~/.cache/yarn
+
+#       - save_cache:
+#           key: build-node-v3-{{ checksum "package.json" }}-{{ arch }}
+#           paths:
+#             - node_modules
+
+#       - run:
+#           name: jest tests
+#           command: |
+#             mkdir -p test-results/jest
+#             yarn run test
+#           environment:
+#             JEST_JUNIT_OUTPUT: test-results/jest/junit.xml
+
+#       - persist_to_workspace:
+#           root: ~/demo-react-native
+#           paths:
+#             - node_modules
+
+#       - store_test_results:
+#           path: test-results
+
+#       - store_artifacts:
+#           path: test-results
+
+#   android:
+#     working_directory: ~/demo-react-native/android
+#     docker:
+#       - image: circleci/android:api-27-node8-alpha
+#     steps:
+#       - checkout:
+#           path: ~/demo-react-native
+
+#       - attach_workspace:
+#           at: ~/demo-react-native
+
+#       - restore_cache:
+#           key: android-bundle-v3-{{ checksum "Gemfile.lock" }}-{{ arch }}
+
+#       - run: bundle install
+
+#       - save_cache:
+#           key: android-bundle-v3-{{ checksum "Gemfile.lock" }}-{{ arch }}
+#           paths:
+#             - vendor/bundle
+
+#       - run: bundle exec fastlane test
+
+#       - store_test_results:
+#           path: ~/demo-react-native/android/reports
+
+#   ios:
+#     macos:
+#       xcode: "9.0"
+#     working_directory: /Users/distiller/project/ios
+#     environment:
+#       FL_OUTPUT_DIR: /Users/distiller/project/output
+#     shell: /bin/bash --login -o pipefail
+#     # parallelism: 2
+#     steps:
+#       - checkout:
+#           path: /Users/distiller/project
+#       - run:
+#           name: Set Ruby Version
+#           command:  echo "ruby-2.4" > ~/.ruby-version
+#       # Not using a workspace here as Node and Yarn versions
+#       # differ between the macOS image and the Docker containers above.
+
+#       - restore_cache:
+#           key: ios-yarn-v3-{{ checksum "/Users/distiller/project/yarn.lock" }}-{{ arch }}
+
+#       - restore_cache:
+#           key: ios-node-v3-{{ checksum "/Users/distiller/project/package.json" }}-{{ arch }}
+
+#       - run: yarn install
+
+#       - save_cache:
+#           key: ios-yarn-v3-{{ checksum "/Users/distiller/project/yarn.lock" }}-{{ arch }}
+#           paths:
+#             - ~/.cache/yarn
+
+#       - save_cache:
+#           key: ios-node-v3-{{ checksum "/Users/distiller/project/package.json" }}-{{ arch }}
+#           paths:
+#             - node_modules
+
+#       - restore_cache:
+#           key: ios-bundle-v3-{{ checksum "Gemfile.lock" }}-{{ arch }}
+
+#       - run: bundle install
+
+#       - save_cache:
+#           key: ios-bundle-v3-{{ checksum "Gemfile.lock" }}-{{ arch }}
+#           paths:
+#             - vendor/bundle
+
+#       - run: |
+#           mkdir -p /Users/distiller/project/output/scan/fastlane
+#           bundle exec fastlane test
+
+#       - run:
+#           command: cp $FL_OUTPUT_DIR/scan/report.junit $FL_OUTPUT_DIR/scan/fastlane/results.xml
+#           when: always
+
+#       - store_artifacts:
+#           path: /Users/distiller/project/output/scan/fastlane
+
+#       - store_test_results:
+#           path: /Users/distiller/project/output/scan
+
+# workflows:
+#   version: 2
+#   node-android-ios:
+#     jobs:
+#       - node
+#       - android:
+#           requires:
+#             - node
+#       - ios:
+#           requires:
+#             - node
