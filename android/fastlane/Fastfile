@@ -25,6 +25,11 @@ platform :android do
     gradle(task: "test")
   end
 
+  desc "JUnit formatter"
+  lane :test do
+    pretty_junit
+  end
+
   desc "Submit a new Beta Build to Crashlytics Beta"
   lane :beta do
     gradle(task: "assembleRelease")

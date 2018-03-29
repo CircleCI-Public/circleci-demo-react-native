@@ -1,0 +1,2 @@
+# Fetched from GitHub
+gem "pretty_junit", git: "https://github.com/leandog/fastlane-plugin-pretty_junit"
