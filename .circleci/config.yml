@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  node:
     working_directory: ~/demo-react-native
     docker:
       - image: circleci/node:8
@@ -45,11 +45,12 @@ jobs:
           path: test-results
 
   android:
-    working_directory: ~/demo-react-native
+    working_directory: ~/demo-react-native/android
     docker:
       - image: circleci/android:api-27-node8-alpha
     steps:
-      - checkout
+      - checkout:
+          at: ~/demo-react-native
 
       - attach_workspace:
           at: ~/demo-react-native
@@ -132,10 +133,10 @@ workflows:
   version: 2
   node-android-ios:
     jobs:
-      - build
+      - node
       - android:
           requires:
-            - build
+            - node
       - ios:
           requires:
-            - build
+            - node
