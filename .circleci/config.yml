@@ -1,13 +1,11 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/project
+    working_directory: ~/demo-react-native
     docker:
       - image: circleci/node:8
     steps:
       - checkout
-
-      # dfd
 
       - restore_cache:
           key: build-yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
@@ -35,9 +33,8 @@ jobs:
           environment:
             JEST_JUNIT_OUTPUT: test-results/jest/junit.xml
 
-
       - persist_to_workspace:
-          root: ~/project
+          root: ~/demo-react-native
           paths:
             - node_modules
 
@@ -48,15 +45,14 @@ jobs:
           path: test-results
 
   android:
-    working_directory: ~/project/android
+    working_directory: ~/demo-react-native
     docker:
       - image: circleci/android:api-27-node8-alpha
     steps:
-      - checkout:
-          path: ~/project
+      - checkout
 
       - attach_workspace:
-          at: ~/project
+          at: ~/demo-react-native
 
       - restore_cache:
           key: android-bundle-v1-{{ checksum "Gemfile.lock" }}-{{ arch }}
@@ -71,7 +67,7 @@ jobs:
       - run: bundle exec fastlane test
 
       - store_test_results:
-          path: ~/project/android/reports
+          path: ~/demo-react-native/android/reports
 
   ios:
     macos:
