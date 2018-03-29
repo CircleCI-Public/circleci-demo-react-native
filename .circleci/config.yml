@@ -127,15 +127,20 @@ jobs:
           command: bundle exec fastlane test
           working_directory: ios
 
-      # - run:
-      #     command: cp $FL_OUTPUT_DIR/scan/report.junit $FL_OUTPUT_DIR/scan/fastlane/results.xml
-      #     when: always
+      - run:
+          name: set up test-results
+          working_directory: ios
+          when: always
+          command: |
+            mkdir -p test-results/fastlane test-results/xcode
+            mv fastlane/report.xml test-results/fastlane
+            mv fastlane/test_output/report.junit test-results/xcode/junit.xml
 
-      # - store_artifacts:
-      #     path: output/scan
+      - store_test_results:
+          path: ios/test-results
 
-      # - store_test_results:
-      #     path: output/scan
+      - store_artifacts:
+          path: ios/test-results
 
 workflows:
   version: 2
