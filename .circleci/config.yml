@@ -8,20 +8,20 @@ jobs:
       - checkout
 
       - restore_cache:
-          key: yarn-{{ checksum "yarn.lock" }}-{{ arch }}
+          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
 
       - restore_cache:
-          key: node-{{ checksum "package.json" }}-{{ arch }}
+          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
 
       - run: yarn install
 
       - save_cache:
-          key: yarn-{{ checksum "yarn.lock" }}-{{ arch }}
+          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
           paths:
             - ~/.cache/yarn
 
       - save_cache:
-          key: node-{{ checksum "package.json" }}-{{ arch }}
+          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
           paths:
             - node_modules
 
@@ -56,12 +56,12 @@ jobs:
           at: ~/demo-react-native
 
       - restore_cache:
-          key: bundle-{{ checksum "Gemfile.lock" }}-{{ arch }}
+          key: bundle-v1-{{ checksum "Gemfile.lock" }}-{{ arch }}
 
       - run: bundle install
 
       - save_cache:
-          key: bundle-{{ checksum "Gemfile.lock" }}-{{ arch }}
+          key: bundle-v1-{{ checksum "Gemfile.lock" }}-{{ arch }}
           paths:
             - vendor/bundle
 
@@ -94,34 +94,34 @@ jobs:
           command:  echo "ruby-2.4" > ~/.ruby-version
 
       - restore_cache:
-          key: yarn-{{ checksum "yarn.lock" }}-{{ arch }}
+          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
 
       - restore_cache:
-          key: node-{{ checksum "package.json" }}-{{ arch }}
+          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
 
       # not using a workspace here as Node and Yarn versions
       # differ between our macOS executor image and the Docker containers above
       - run: yarn install
 
       - save_cache:
-          key: yarn-{{ checksum "yarn.lock" }}-{{ arch }}
+          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
           paths:
             - ~/.cache/yarn
 
       - save_cache:
-          key: node-{{ checksum "package.json" }}-{{ arch }}
+          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
           paths:
             - node_modules
 
       - restore_cache:
-          key: bundle-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
+          key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
 
       - run:
           command: bundle install
           working_directory: ios
 
       - save_cache:
-          key: bundle-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
+          key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
           paths:
             - vendor/bundle
 
