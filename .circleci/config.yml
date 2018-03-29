@@ -79,14 +79,14 @@ jobs:
   ios:
     macos:
       xcode: "9.0"
-    working_directory: /Users/distiller/project/ios
+    working_directory: ~/demo-react-native
     environment:
-      FL_OUTPUT_DIR: /Users/distiller/project/output
+      FL_OUTPUT_DIR: output
     shell: /bin/bash --login -o pipefail
     # parallelism: 2
     steps:
-      - checkout:
-          path: /Users/distiller/project
+      - checkout
+
       - run:
           name: Set Ruby Version
           command:  echo "ruby-2.4" > ~/.ruby-version
@@ -94,35 +94,35 @@ jobs:
       # differ between the macOS image and the Docker containers above.
 
       - restore_cache:
-          key: ios-yarn-v3-{{ checksum "/Users/distiller/project/yarn.lock" }}-{{ arch }}
+          key: ios-yarn-v3-{{ checksum "yarn.lock" }}-{{ arch }}
 
       - restore_cache:
-          key: ios-node-v3-{{ checksum "/Users/distiller/project/package.json" }}-{{ arch }}
+          key: ios-node-v3-{{ checksum "package.json" }}-{{ arch }}
 
       - run: yarn install
 
       - save_cache:
-          key: ios-yarn-v3-{{ checksum "/Users/distiller/project/yarn.lock" }}-{{ arch }}
+          key: ios-yarn-v3-{{ checksum "yarn.lock" }}-{{ arch }}
           paths:
             - ~/.cache/yarn
 
       - save_cache:
-          key: ios-node-v3-{{ checksum "/Users/distiller/project/package.json" }}-{{ arch }}
+          key: ios-node-v3-{{ checksum "package.json" }}-{{ arch }}
           paths:
             - node_modules
 
       - restore_cache:
-          key: ios-bundle-v3-{{ checksum "Gemfile.lock" }}-{{ arch }}
+          key: ios-bundle-v3-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
 
       - run: bundle install
 
       - save_cache:
-          key: ios-bundle-v3-{{ checksum "Gemfile.lock" }}-{{ arch }}
+          key: ios-bundle-v3-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
           paths:
             - vendor/bundle
 
       - run: |
-          mkdir -p /Users/distiller/project/output/scan/fastlane
+          mkdir -p output/scan/fastlane
           bundle exec fastlane test
 
       - run:
@@ -130,10 +130,10 @@ jobs:
           when: always
 
       - store_artifacts:
-          path: /Users/distiller/project/output/scan/fastlane
+          path: output/scan
 
       - store_test_results:
-          path: /Users/distiller/project/output/scan
+          path: output/scan
 
 workflows:
   version: 2
