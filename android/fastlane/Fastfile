@@ -23,10 +23,6 @@ platform :android do
   desc "Runs all the tests"
   lane :test do
     gradle(task: "test")
-  end
-
-  desc "JUnit formatter"
-  lane :test do
     pretty_junit
   end
 
