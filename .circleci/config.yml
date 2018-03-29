@@ -80,10 +80,8 @@ jobs:
     macos:
       xcode: "9.0"
     working_directory: ~/demo-react-native
-    environment:
-      FL_OUTPUT_DIR: output
-    shell: /bin/bash --login -o pipefail
-    # parallelism: 2
+    # environment:
+    #   FL_OUTPUT_DIR: output
     steps:
       - checkout
 
@@ -114,26 +112,28 @@ jobs:
       - restore_cache:
           key: ios-bundle-v3-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
 
-      - run: cd ios && bundle install
+      - run:
+          command: bundle install
+          working_directory: ios
 
       - save_cache:
           key: ios-bundle-v3-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
           paths:
             - vendor/bundle
 
-      - run: |
-          mkdir -p output/scan/fastlane
-          cd ios && bundle exec fastlane test
-
       - run:
-          command: cp $FL_OUTPUT_DIR/scan/report.junit $FL_OUTPUT_DIR/scan/fastlane/results.xml
-          when: always
+          command: bundle exec fastlane test
+          working_directory: ios
 
-      - store_artifacts:
-          path: output/scan
+      # - run:
+      #     command: cp $FL_OUTPUT_DIR/scan/report.junit $FL_OUTPUT_DIR/scan/fastlane/results.xml
+      #     when: always
 
-      - store_test_results:
-          path: output/scan
+      # - store_artifacts:
+      #     path: output/scan
+
+      # - store_test_results:
+      #     path: output/scan
 
 workflows:
   version: 2
