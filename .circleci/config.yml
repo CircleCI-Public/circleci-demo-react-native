@@ -65,13 +65,16 @@ jobs:
           paths:
             - vendor/bundle
 
-      - run: bundle exec fastlane test
+      - run: |
+          mkdir -p test-results/fastlane
+          bundle exec fastlane test
+          mv fastlane/report.xml test-results/fastlane
 
       - store_test_results:
-          path: ~/demo-react-native/android
+          path: test-results
 
       - store_artifacts:
-          path: fastlane/report.xml
+          path: test-results
 
   ios:
     macos:
