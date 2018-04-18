@@ -1,6 +1,6 @@
 # CircleCI Demo React Native App
 
-[![CircleCI](https://circleci.com/gh/CircleCI-Public/circleci-demo-react-native.svg?style=svg)](https://circleci.com/gh/CircleCI-Public/circleci-demo-react-native)
+[![CircleCI](https://circleci.com/gh/jcleigh-hst/circleci-demo-react-native.svg?style=svg)](https://circleci.com/gh/jcleigh-hst/circleci-demo-react-native)
 
 ## Building and running locally
 
