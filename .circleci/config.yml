@@ -152,6 +152,16 @@ workflows:
       - android:
           requires:
             - node
+          filters:
+            branches:
+              only: 
+                - dev
+               
       - ios:
           requires:
             - node
+             filters:
+            branches:
+              only: 
+                - dev
+                
