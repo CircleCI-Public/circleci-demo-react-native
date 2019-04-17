@@ -28,3 +28,4 @@ ios/fastlane/test_output
 
 android/app/build
 android/build
+.gradle
