@@ -13,36 +13,31 @@
 # Update this, if you use features of a newer version
 fastlane_version "2.67.0"
 
-default_platform :ios
+default_platform :android
 
-platform :ios do
+platform :android do
   before_all do
-    setup_circle_ci
+    # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
   end
 
   desc "Runs all the tests"
   lane :test do
-    scan
+    gradle(task: "test")
   end
 
-  desc "Submit a new Beta Build to Apple TestFlight"
-  desc "This will also make sure the profile is up to date"
+  desc "Submit a new Beta Build to Crashlytics Beta"
   lane :beta do
-    # match(type: "appstore") # more information: https://codesigning.guide
-    gym # Build your app - more options available
-    pilot
+    gradle(task: "assembleRelease")
+    crashlytics
 
     # sh "your_script.sh"
-    # You can also use other beta testing services here (run `fastlane actions`)
+    # You can also use other beta testing services here
   end
 
-  desc "Deploy a new version to the App Store"
-  lane :release do
-    # match(type: "appstore")
-    # snapshot
-    gym # Build your app - more options available
-    deliver(force: true)
-    # frameit
+  desc "Deploy a new version to the Google Play"
+  lane :deploy do
+    gradle(task: "assembleRelease")
+    supply
   end
 
   # You can define as many lanes as you want
@@ -62,7 +57,6 @@ platform :ios do
     # )
   end
 end
-
 
 # More information about multiple platforms in fastlane: https://docs.fastlane.tools/advanced/#control-configuration-by-lane-and-by-platform
 # All available actions: https://docs.fastlane.tools/actions
