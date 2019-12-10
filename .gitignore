@@ -28,3 +28,6 @@ ios/fastlane/test_output
 
 android/app/build
 android/build
+
+# CocoaPods
+/ios/Pods/
