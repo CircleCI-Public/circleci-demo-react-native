@@ -47,7 +47,7 @@ jobs:
   android:
     working_directory: ~/demo-react-native/android
     docker:
-      - image: circleci/android:api-28-node8
+      - image: circleci/android:api-28-node8-alpha
     steps:
       - checkout:
           path: ~/demo-react-native
@@ -64,6 +64,8 @@ jobs:
           key: bundle-v1-{{ checksum "Gemfile.lock" }}-{{ arch }}
           paths:
             - vendor/bundle
+      
+      - run: yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses || if [ $? -ne '141' ]; then exit $?; fi;  #Captures SIGPIPE 141 error but still allow repeating "y" to accept all licenses
 
       - run:
           name: fastlane tests
