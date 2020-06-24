@@ -47,7 +47,7 @@ jobs:
   android:
     working_directory: ~/demo-react-native/android
     docker:
-      - image: circleci/android:api-28-node8-alpha
+      - image: circleci/android:api-28-node8
     steps:
       - checkout:
           path: ~/demo-react-native
