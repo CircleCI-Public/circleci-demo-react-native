@@ -58,6 +58,8 @@ jobs:
       - restore_cache:
           key: bundle-v1-{{ checksum "Gemfile.lock" }}-{{ arch }}
 
+      - run: exit 1
+
       - run: bundle install
 
       - save_cache:
