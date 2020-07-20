@@ -25,6 +25,7 @@
     "testResultsProcessor": "jest-junit"
   },
   "dependencies": {
+    "@babel/plugin-transform-react-jsx": "^7.10.4",
     "@react-native-community/cli-platform-android": "3.0.3",
     "react": "16.13.1",
     "react-native": "0.63.1"

@@ -4,7 +4,7 @@ jobs:
     working_directory: ~/demo-react-native
     docker:
       - image: cimg/node:12.16
-      
+
     steps:
       - checkout
 
@@ -44,8 +44,6 @@ jobs:
 
       - store_artifacts:
           path: test-results
-
-            
 
   macos-build-and-test:
     working_directory: ~/demo-react-native
@@ -93,59 +91,11 @@ jobs:
           path: output
       - store_test_results:
           path: output/scan
-
-  macos-adhoc:
-    working_directory: ~/demo-react-native
-    macos:
-      xcode: 11.3.0
-    environment:
-      FL_OUTPUT_DIR: output
-      FASTLANE_LANE: adhoc
-    steps:
-      - checkout
-      - restore_cache:
-          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
-
-      - restore_cache:
-          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
-
-      - run: yarn install
-
-      - save_cache:
-          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
-          paths:
-            - ~/.cache/yarn
-      - save_cache:
-          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
-          paths:
-            - node_modules
-
-      - restore_cache:
-          key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
-    
-      - run: 
-          command: bundle install
-          working_directory: ios
-
-      - save_cache:
-          key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
-          paths:
-          - vendor/bundle
-      - run: 
-          command: pod install
-          working_directory: ios
-
-      - run:
-          name: Fastlane
-          command: bundle exec fastlane $FASTLANE_LANE
-      - store_artifacts:
-          path: output
             
   android-build-and-test:
     working_directory: ~/demo-react-native/android
     docker:
       - image: circleci/android:api-29-node
-    resource_class: large
     steps:
       - checkout:
           path: ~/demo-react-native
