@@ -110,7 +110,9 @@
       </section>
       <section class="right">
         <section id="counters">
-          <h2 id="test-count"><span class="number">1</span> tests</h2>
+          <h2 id="test-count"><span class="number">2</span> tests</h2>
+          
+            <h2 id="fail-count"><span class="number">2</span> failures</h2>
           
         </section>
         <section id="segment-bar">
@@ -121,7 +123,7 @@
     <section id="test-suites">
       
         
-        <section class="test-suite passing" id="circleciDemoReactNative">
+        <section class="test-suite failing" id="circleciDemoReactNative">
           <section class="heading" onclick="toggleTests(this);">
             <h3 class="title">circleciDemoReactNative</h3>
           </section>
@@ -129,14 +131,55 @@
             <table>
             
               
-              <tr class="test passing "  onclick="toggleDetails('testRendersWelcomeScreen');">
+              <tr class="test failing "  onclick="toggleDetails('testRendersWelcomeScreen');">
                 <td>
-                  
-                    <h3 class="time">0.161s</h3>
                   
                 </td>
                 <td><h3 class="title">testRendersWelcomeScreen</h3></td>
               </tr>
+              
+                <tr class="details failing testRendersWelcomeScreen">
+                  <td></td>
+                  <td>
+                    
+                      <section class="test-detail reason">((redboxError) == nil) failed: "index.js: Cannot find module 'babel-plugin-transform-react-jsx-source' from '/Users/ryanpedersen/circleci-demo-react-native'</section>
+                    
+                    
+                      <section class="test-detail snippet">
+  <span class="n">XCTAssertNil</span><span class="p">(</span><span class="n">redboxError</span><span class="p">,</span> <span class="s">@"RedBox error: %@"</span><span class="p">,</span> <span class="n">redboxError</span><span class="p">);</span>
+  <span class="n">XCTAssertTrue</span><span class="p">(</span><span class="n">foundElement</span><span class="p">,</span> <span class="s">@"Couldn't find element with text '%@' in %d seconds"</span><span class="p">,</span> <span class="n">TEXT_TO_LOOK_FOR</span><span class="p">,</span> <span class="n">TIMEOUT_SECONDS</span><span class="p">);</span>
+</section>
+                      <section class="test-detail">/Users/ryanpedersen/circleci-demo-react-native/ios/circleciDemoReactNativeTests/circleciDemoReactNativeTests.m:60</section>
+                    
+                    
+                  </td>
+                </tr>
+              
+            
+              
+              <tr class="test failing odd"  onclick="toggleDetails('testRendersWelcomeScreen');">
+                <td>
+                  
+                </td>
+                <td><h3 class="title">testRendersWelcomeScreen</h3></td>
+              </tr>
+              
+                <tr class="details failing testRendersWelcomeScreen">
+                  <td></td>
+                  <td>
+                    
+                      <section class="test-detail reason">((foundElement) is true) failed - Couldn't find element with text 'Hello from CircleCI!' in 600 seconds</section>
+                    
+                    
+                      <section class="test-detail snippet">  <span class="n">XCTAssertNil</span><span class="p">(</span><span class="n">redboxError</span><span class="p">,</span> <span class="s">@"RedBox error: %@"</span><span class="p">,</span> <span class="n">redboxError</span><span class="p">);</span>
+  <span class="n">XCTAssertTrue</span><span class="p">(</span><span class="n">foundElement</span><span class="p">,</span> <span class="s">@"Couldn't find element with text '%@' in %d seconds"</span><span class="p">,</span> <span class="n">TEXT_TO_LOOK_FOR</span><span class="p">,</span> <span class="n">TIMEOUT_SECONDS</span><span class="p">);</span>
+<span class="p">}</span>
+</section>
+                      <section class="test-detail">/Users/ryanpedersen/circleci-demo-react-native/ios/circleciDemoReactNativeTests/circleciDemoReactNativeTests.m:61</section>
+                    
+                    
+                  </td>
+                </tr>
               
             
             </table>
