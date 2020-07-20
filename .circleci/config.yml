@@ -75,6 +75,7 @@ jobs:
       - run: 
           command: pod install
           working_directory: ios
+
       - run: 
           command: bundle install
           working_directory: ios
@@ -141,10 +142,6 @@ workflows:
       - macos-build-and-test:
           requires:
             - node
-      - macos-adhoc:
-          filters:
-            branches:
-              only: development
           requires:
             - macos-build-and-test
             
