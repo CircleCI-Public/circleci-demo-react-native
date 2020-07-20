@@ -142,6 +142,4 @@ workflows:
       - macos-build-and-test:
           requires:
             - node
-          requires:
-            - macos-build-and-test
             
