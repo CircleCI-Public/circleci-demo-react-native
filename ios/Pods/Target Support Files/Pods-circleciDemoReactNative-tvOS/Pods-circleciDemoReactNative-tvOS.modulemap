@@ -1,0 +1,6 @@
+framework module Pods_circleciDemoReactNative_tvOS {
+  umbrella header "Pods-circleciDemoReactNative-tvOS-umbrella.h"
+
+  export *
+  module * { export * }
+}
