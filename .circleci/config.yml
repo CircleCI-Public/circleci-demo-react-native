@@ -133,7 +133,7 @@ jobs:
           path: test-results
 
 workflows:
-  build-test-adhoc:
+  node-android-ios:
     jobs:
       - node
       - android-build-and-test:

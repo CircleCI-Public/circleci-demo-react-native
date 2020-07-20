@@ -1,11 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<testsuites name='circleciDemoReactNativeTests.xctest' tests='2' failures='2'>
-  <testsuite name='circleciDemoReactNative' tests='2' failures='2'>
-    <testcase classname='circleciDemoReactNative' name='testRendersWelcomeScreen'>
-      <failure message='((redboxError) == nil) failed: &quot;index.js: Cannot find module &apos;babel-plugin-transform-react-jsx-source&apos; from &apos;/Users/ryanpedersen/circleci-demo-react-native&apos;'>circleciDemoReactNativeTests/circleciDemoReactNativeTests.m:60</failure>
-    </testcase>
-    <testcase classname='circleciDemoReactNative' name='testRendersWelcomeScreen'>
-      <failure message='((foundElement) is true) failed - Couldn&apos;t find element with text &apos;Hello from CircleCI!&apos; in 600 seconds'>circleciDemoReactNativeTests/circleciDemoReactNativeTests.m:61</failure>
-    </testcase>
+<testsuites name='circleciDemoReactNativeTests.xctest' tests='1' failures='0'>
+  <testsuite name='circleciDemoReactNative' tests='1' failures='0'>
+    <testcase classname='circleciDemoReactNative' name='testRendersWelcomeScreen' time='0.262'/>
   </testsuite>
 </testsuites>
