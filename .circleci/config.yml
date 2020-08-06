@@ -101,11 +101,11 @@ jobs:
       - checkout:
           path: ~/demo-react-native
         
-      - run:
-          name: install deps 
-          command: |           
-            yarn add @react-native-community/cli-platform-android@3.0.3
-            yarn add react-native@0.61.5
+      # - run:
+      #     name: install deps 
+      #     command: |           
+      #       yarn add @react-native-community/cli-platform-android@3.0.3
+      #       yarn add react-native@0.61.5
       - attach_workspace:
           at: ~/demo-react-native
 
