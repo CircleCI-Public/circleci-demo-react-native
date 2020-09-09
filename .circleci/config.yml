@@ -52,7 +52,7 @@ jobs:
     environment:
       FL_OUTPUT_DIR: output
       FASTLANE_LANE: test
-      
+
     steps:
       - checkout
       - restore_cache:
@@ -76,6 +76,9 @@ jobs:
       - restore_cache:
           key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
 
+      - restore_cache:
+          key: pods-v1-{{ checksum "ios/Podfile.lock" }}-{{ arch }}
+
       - run: 
           command: pod install
           working_directory: ios
@@ -88,6 +91,11 @@ jobs:
           key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
           paths:
             - vendor/bundle
+            
+      - save_cache:
+          key: pods-v1-{{ checksum "ios/Podfile.lock" }}-{{ arch }}
+          paths:
+            - ios/Pods
 
       - run:
           name: Fastlane
@@ -96,6 +104,7 @@ jobs:
 
       - store_artifacts:
           path: output
+          
       - store_test_results:
           path: output/scan
             
