@@ -3,23 +3,32 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "babel-preset-react-native-stage-0": "^1.0.1",
-    "jest-expo": "23.0.0",
+    "@babel/core": "^7.8.4",
+    "@babel/runtime": "^7.8.4",
+    "@react-native-community/eslint-config": "^1.1.0",
+    "babel-jest": "^25.1.0",
+    "eslint": "^6.5.1",
+    "jest": "^25.1.0",
     "jest-junit": "3.3.0",
-    "react-test-renderer": "16.0.0"
+    "metro-react-native-babel-preset": "^0.60.0",
+    "react-test-renderer": "16.13.1"
   },
   "scripts": {
-    "start": "react-native start",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "test": "node node_modules/jest/bin/jest.js"
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "eslint ."
   },
   "jest": {
-    "preset": "jest-expo",
+    "preset": "react-native",
     "testResultsProcessor": "jest-junit"
   },
   "dependencies": {
-    "react": "16.0.0",
-    "react-native": "0.50.3"
+    "@babel/plugin-transform-react-jsx": "^7.10.4",
+    "@react-native-community/cli-platform-android": "3.0.3",
+    "babel-plugin-transform-react-jsx-source": "^6.22.0",
+    "react": "16.13.1",
+    "react-native": "0.63.1"
   }
 }

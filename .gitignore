@@ -1,30 +1,59 @@
-# See https://help.github.com/ignore-files/ for more about ignoring files.
+# OSX
+#
+.DS_Store
 
-# expo
-.expo/
+# Xcode
+#
+build/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+*.xccheckout
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+*.xcuserstate
 
-# dependencies
-/node_modules
+# Android/IntelliJ
+#
+build/
+.idea
+.gradle
+local.properties
+*.iml
 
-# misc
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+# node.js
+#
+node_modules/
+npm-debug.log
+yarn-error.log
 
-ios/CircleCIDemoReactNative.xcodeproj/project.xcworkspace/xcuserdata/*
+# BUCK
+buck-out/
+\.buckd/
+*.keystore
+!debug.keystore
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# fastlane
+#
+# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
+# screenshots whenever they are needed.
+# For more information about the recommended setup visit:
+# https://docs.fastlane.tools/best-practices/source-control/
 
-**/.DS_Store
+*/fastlane/report.xml
+*/fastlane/Preview.html
+*/fastlane/screenshots
 
-ios/build
-ios/fastlane/report.xml
-ios/fastlane/test_output
+# Bundle artifact
+*.jsbundle
 
-**/junit.xml
-
-android/app/build
-android/build
+# # CocoaPods
+/ios/Pods/

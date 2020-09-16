@@ -1,0 +1,5 @@
+#import <Foundation/Foundation.h>
+@interface PodsDummy_Pods_circleciDemoReactNative_circleciDemoReactNativeTests : NSObject
+@end
+@implementation PodsDummy_Pods_circleciDemoReactNative_circleciDemoReactNativeTests
+@end

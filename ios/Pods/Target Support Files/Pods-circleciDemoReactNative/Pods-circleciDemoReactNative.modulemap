@@ -1,0 +1,6 @@
+module Pods_circleciDemoReactNative {
+  umbrella header "Pods-circleciDemoReactNative-umbrella.h"
+
+  export *
+  module * { export * }
+}
