@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+ testfairy: testfairy/uploader@2.0.1
 jobs:
   node:
     working_directory: ~/demo-react-native
@@ -142,7 +144,11 @@ jobs:
           path: test-results
 
       - store_artifacts:
-          path: test-results
+          path: test-result
+      
+      - testfairy/uploader:
+          api-key: TESTFAIRY_API_KEY
+          file: app.apk
 
 workflows:
   node-android-ios:
@@ -154,4 +160,4 @@ workflows:
       - macos-build-and-test:
           requires:
             - node
-            
+
