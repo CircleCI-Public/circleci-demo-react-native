@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+ testfairy: testfairy/uploader@2.0.1
 jobs:
   node:
     working_directory: ~/demo-react-native
@@ -143,15 +145,10 @@ jobs:
 
       - store_artifacts:
           path: test-result
-          
-  deployment:
-    beta_distribution:
-      branch: master
-      commands:
-        - gym
-        - ipa distribute:testfairy
-            --key     "$TESTFAIRY_API_KEY"
-            --comment "CircleCI build $CIRCLE_BUILD_URL"
+      
+      - testfairy/uploader:
+          api-key: TESTFAIRY_API_KEY
+          file: app.apk
 
 workflows:
   node-android-ios:
@@ -160,8 +157,6 @@ workflows:
       - android-build-and-test:
           requires:
             - node
-      - deployment
       - macos-build-and-test:
           requires:
             - node
-      - deployment
