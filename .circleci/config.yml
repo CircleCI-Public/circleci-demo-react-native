@@ -142,7 +142,16 @@ jobs:
           path: test-results
 
       - store_artifacts:
-          path: test-results
+          path: test-result
+          
+deployment:
+  beta_distribution:
+    branch: master
+    commands:
+      - gym
+      - ipa distribute:testfairy
+        --key     "$TESTFAIRY_API_KEY"
+        --comment "CircleCI build $CIRCLE_BUILD_URL"
 
 workflows:
   node-android-ios:
