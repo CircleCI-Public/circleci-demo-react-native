@@ -160,7 +160,7 @@ workflows:
       - android-build-and-test:
           requires:
             - node
-      - macos-build-and-test:
-          requires:
-            - node
+#      - macos-build-and-test:
+#          requires:
+#            - node
             
