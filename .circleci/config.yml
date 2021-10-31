@@ -37,7 +37,7 @@ jobs:
       - restore_cache_node
       - run: yarn install
       - save_cache_yarn
-      - savce_cache_node
+      - save_cache_node
       - run:
           name: jest tests
           command: |
