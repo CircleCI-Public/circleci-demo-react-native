@@ -1,4 +1,30 @@
 version: 2.1
+
+commands:
+  restore_cache_yarn:
+    steps:
+      - restore_cache:
+          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
+
+  restore_cache_node:
+    steps:
+      - restore_cache:
+          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
+
+  save_cache_yarn:
+    steps:
+      - save_cache:
+          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
+          paths:
+            - ~/.cache/yarn
+
+  save_cache_node:
+    steps:
+      - save_cache:
+          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
+          paths:
+            - node_modules
+
 jobs:
   node:
     working_directory: ~/demo-react-native
@@ -7,25 +33,11 @@ jobs:
 
     steps:
       - checkout
-
-      - restore_cache:
-          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
-
-      - restore_cache:
-          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
-
+      - restore_cache_yarn
+      - restore_cache_node
       - run: yarn install
-
-      - save_cache:
-          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
-          paths:
-            - ~/.cache/yarn
-
-      - save_cache:
-          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
-          paths:
-            - node_modules
-
+      - save_cache_yarn
+      - savce_cache_node
       - run:
           name: jest tests
           command: |
@@ -33,15 +45,12 @@ jobs:
             yarn run test
           environment:
             JEST_JUNIT_OUTPUT: test-results/jest/junit.xml
-
       - persist_to_workspace:
           root: ~/demo-react-native
           paths:
             - node_modules
-
       - store_test_results:
           path: test-results
-
       - store_artifacts:
           path: test-results
 
@@ -81,11 +90,11 @@ jobs:
       - restore_cache:
           key: pods-v1-{{ checksum "ios/Podfile.lock" }}-{{ arch }}
 
-      - run: 
+      - run:
           command: pod install
           working_directory: ios
 
-      - run: 
+      - run:
           command: bundle install
           working_directory: ios
 
@@ -106,10 +115,10 @@ jobs:
 
       - store_artifacts:
           path: output
-          
+
       - store_test_results:
           path: output/scan
-            
+
   android-build-and-test:
     working_directory: ~/demo-react-native/android
     docker:
