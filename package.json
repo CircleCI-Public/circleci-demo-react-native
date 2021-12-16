@@ -28,7 +28,7 @@
     "@babel/plugin-transform-react-jsx": "^7.10.4",
     "@react-native-community/cli-platform-android": "3.0.3",
     "babel-plugin-transform-react-jsx-source": "^6.22.0",
-    "react": "16.13.1",
+    "react": "16.14.0",
     "react-native": "0.63.1"
   }
 }
