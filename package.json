@@ -18,7 +18,9 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "prepare": "yarn run snyk-protect",
+    "snyk-protect": "snyk-protect"
   },
   "jest": {
     "preset": "react-native",
@@ -29,6 +31,8 @@
     "@react-native-community/cli-platform-android": "3.0.3",
     "babel-plugin-transform-react-jsx-source": "^6.22.0",
     "react": "16.13.1",
-    "react-native": "0.63.1"
-  }
+    "react-native": "0.63.1",
+    "@snyk/protect": "latest"
+  },
+  "snyk": true
 }
